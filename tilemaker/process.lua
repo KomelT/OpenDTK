@@ -462,14 +462,14 @@ function way_function()
 		local h = highway
 		local is_road = true
 		if h == "" then
-			h = public_transport
-			is_road = false
+				h = public_transport
+				is_road = false
 		end
 		local subclass = nil
 		local under_construction = false
 		if highway == "construction" and construction ~= "" then
-			h = construction
-			under_construction = true
+				h = construction
+				under_construction = true
 		end
 		local minzoom = INVALID_ZOOM
 		if majorRoadValues[h]        then minzoom = 4
@@ -479,72 +479,72 @@ function way_function()
 		elseif z10RoadValues[h]      then minzoom = 10
 		elseif z11RoadValues[h]      then minzoom = 11
 		elseif z12MinorRoadValues[h] then
-			minzoom = 12
-			subclass = h
-			h = "minor"
+				minzoom = 12
+				subclass = h
+				h = "minor"
 		elseif z12OtherRoadValues[h] then minzoom = 12
 		elseif z13RoadValues[h]      then minzoom = 13
 		elseif pathValues[h]         then
-			minzoom = 14
-			subclass = h
-			h = "path"
+				minzoom = 14
+				subclass = h
+				h = "path"
 		end
 
 		-- Links (ramp)
 		local ramp=false
 		if linkValues[h] then
-			splitHighway = split(highway, "_")
-			highway = splitHighway[1]; h = highway
-			ramp = true
+				local splitHighway = split(highway, "_")
+				highway = splitHighway[1]
+				h = highway
+				ramp = true
 		end
 
 		-- Construction
 		if under_construction then
-			h = h .. "_construction"
+				h = h .. "_construction"
 		end
 
-		-- Drop underground platforms
-		local layer = Find("layer")
-		local layerNumeric = tonumber(layer)
-		if not is_road and layerNumeric ~= nil and layerNumeric < 0 then
-			minzoom = INVALID_ZOOM
-		end
-
-		-- Drop all areas except infrastructure for pedestrians handled above
+		-- Drop all areas except infrastructure for pedestrians
 		if is_highway_area and h ~= "path" then
-			minzoom = INVALID_ZOOM
+				minzoom = INVALID_ZOOM
 		end
 
 		-- Write to layer
 		if minzoom <= 14 then
-			write_to_transportation_layer(minzoom, h, subclass, ramp, service, false, is_road, is_highway_area)
+				write_to_transportation_layer(minzoom, h, subclass, ramp, service, false, is_road, is_highway_area)
 
-			-- Write names
-			if not is_closed and (HasNames() or Holds("ref")) then
-				if h == "motorway" then
-					minzoom = 7
-				elseif h == "trunk" then
-					minzoom = 8
-				elseif h == "primary" then
-					minzoom = 10
-				elseif h == "secondary" then
-					minzoom = 11
-				elseif h == "minor" or h == "track" or h == "tertiary" then
-					minzoom = 13
-				else
-					minzoom = 14
+				-- Add tracktype if available
+				local tracktype = Find("tracktype")
+				if tracktype and tracktype ~= "" then
+						Attribute("tracktype", tracktype)
 				end
-				Layer("transportation_name", false)
-				MinZoom(minzoom)
-				SetNameAttributes()
-				Attribute("class",h)
-				Attribute("network","road") -- **** could also be us-interstate, us-highway, us-state
-				if subclass then Attribute("subclass", highway) end
-				local ref = Find("ref")
-				if ref~="" then
-					Attribute("ref",ref)
-					AttributeNumeric("ref_length",ref:len())
-				end
+
+				-- Write names
+				if not is_closed and (HasNames() or Holds("ref")) then
+						if h == "motorway" then
+								minzoom = 7
+						elseif h == "trunk" then
+								minzoom = 8
+						elseif h == "primary" then
+								minzoom = 10
+						elseif h == "secondary" then
+								minzoom = 11
+						elseif h == "minor" or h == "track" or h == "tertiary" then
+								minzoom = 13
+						else
+								minzoom = 14
+						end
+						Layer("transportation_name", false)
+						MinZoom(minzoom)
+						SetNameAttributes()
+						Attribute("class", h)
+						Attribute("network", "road")
+						if subclass then Attribute("subclass", highway) end
+						local ref = Find("ref")
+						if ref~="" then
+								Attribute("ref", ref)
+								AttributeNumeric("ref_length", ref:len())
+						end
 			end
 		end
 	end

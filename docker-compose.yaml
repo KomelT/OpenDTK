@@ -1,0 +1,41 @@
+services:
+  make:
+    build:
+      context: tilemaker
+      dockerfile: dockerfile-make
+    volumes:
+      - ./tilemaker:/var/app/out/
+      - ./tilemaker/tmp:/var/app/tmp/
+    ports:
+      - 5173:5173
+
+  server:
+    build:
+      context: tilemaker
+      dockerfile: dockerfile-server
+    volumes:
+      - ./tilemaker:/var/app/out/
+    ports:
+      - 8080:8080
+    depends_on:
+      make:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+  app:
+    build:
+      context: app
+      dockerfile: dockerfile-dev
+    volumes:
+      - ./app:/var/app
+    environment:
+      VITE_TILEMAKER_SERVER_URL: http://localhost:8080
+    ports:
+      - 5173:5173
+    depends_on:
+      server:
+        condition: service_healthy

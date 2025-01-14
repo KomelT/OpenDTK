@@ -1,0 +1,9 @@
+FROM ghcr.io/systemed/tilemaker:master
+
+WORKDIR /var/app
+
+COPY script-make.sh .
+
+RUN apt-get update && apt-get install -y wget tree
+
+ENTRYPOINT ["./script-make.sh"]
