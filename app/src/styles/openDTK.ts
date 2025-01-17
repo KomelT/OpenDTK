@@ -38,8 +38,6 @@ const terrains: LayerSpecification[] = [
 		type: "fill",
 		source: "openmaptiles",
 		"source-layer": "building",
-		maxzoom: 17,
-		minzoom: 1,
 		paint: {
 			"fill-color": "#000",
 		},
@@ -116,7 +114,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 2,
+			"line-gap-width": 1,
 		},
 	},
 	{
@@ -128,7 +126,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#fff",
-			"line-width": 2,
+			"line-width": 1,
 		},
 	},
 	{
@@ -140,7 +138,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 3,
+			"line-gap-width": 2,
 		},
 	},
 	{
@@ -156,7 +154,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 3,
+			"line-gap-width": 2,
 		},
 	},
 	{
@@ -168,7 +166,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 3,
+			"line-gap-width": 2,
 		},
 	},
 	{
@@ -180,7 +178,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 3,
+			"line-gap-width": 2,
 		},
 	},
 	{
@@ -192,7 +190,7 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#000",
-			"line-gap-width": 3,
+			"line-gap-width": 2,
 		},
 	},
 	{
@@ -208,8 +206,42 @@ const roads: LayerSpecification[] = [
 		layout: { "line-cap": "square", "line-join": "bevel" },
 		paint: {
 			"line-color": "#fff",
-			"line-width": 3,
+			"line-width": 2,
 		},
 	},
 ];
 openDTK.layers.push(...roads);
+
+const labels: LayerSpecification[] = [
+	{
+		id: "place-other",
+		type: "symbol",
+		metadata: { "mapbox:group": "1444849242106.713" },
+		source: "openmaptiles",
+		"source-layer": "place",
+		filter: [
+			"!in",
+			"class",
+			"city",
+			"town",
+			"village",
+			"state",
+			"country",
+			"continent",
+		],
+		layout: {
+			"text-font": ["KlokanTech Noto Sans Bold"],
+			"text-letter-spacing": 0.1,
+			"text-max-width": 9,
+			"text-size": 12,
+			"text-transform": "uppercase",
+			visibility: "visible",
+		},
+		paint: {
+			"text-color": "#633",
+			"text-halo-color": "rgba(255,255,255,0.8)",
+			"text-halo-width": 1.2,
+		},
+	},
+];
+openDTK.layers.push(...labels);

@@ -479,13 +479,13 @@ function way_function()
 		elseif z10RoadValues[h]      then minzoom = 10
 		elseif z11RoadValues[h]      then minzoom = 11
 		elseif z12MinorRoadValues[h] then
-				minzoom = 12
+				minzoom = 10
 				subclass = h
 				h = "minor"
 		elseif z12OtherRoadValues[h] then minzoom = 12
 		elseif z13RoadValues[h]      then minzoom = 13
 		elseif pathValues[h]         then
-				minzoom = 14
+				minzoom = 10
 				subclass = h
 				h = "path"
 		end
@@ -646,8 +646,9 @@ function way_function()
 	-- Set 'building' and associated
 	if building~="" then
 		Layer("building", true)
+		MinZoom(10)
 		SetBuildingHeightAttributes()
-		SetMinZoomByArea()
+		-- SetMinZoomByArea()
 	end
 
 	-- Set 'housenumber'
