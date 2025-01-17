@@ -4,6 +4,6 @@ WORKDIR /var/app
 
 COPY script-make.sh .
 
-RUN apt-get update && apt-get install -y wget tree
+RUN apt-get update && apt-get install -y wget
 
 ENTRYPOINT ["./script-make.sh"]
