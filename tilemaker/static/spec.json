@@ -1,7 +1,7 @@
 {
 	"tilejson": "2.1.0",
-	"name": "tilemaker_default",
-	"description": "Tiles made with Tilemaker",
+	"name": "open_dtk",
+	"description": "OpenDTK Tiles",
 	"version": "1.0.0",
 	"scheme": "xyz",
 	"tiles": [

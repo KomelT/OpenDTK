@@ -10,10 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@watergis/maplibre-gl-export": "^4.0.0",
-    "i": "^0.3.7",
     "maplibre-gl": "^5.0.1",
-    "npm": "^11.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

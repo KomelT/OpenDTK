@@ -8,8 +8,6 @@ import { openDTK } from "../styles/openDTK";
 import { TopoScale } from "../TopoScale/topoScale";
 import "../TopoScale/style.css";
 
-import { MaplibreExportControl } from "@watergis/maplibre-gl-export"
-
 export function MapC() {
   const map = useRef<maplibregl.Map | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
@@ -30,15 +28,6 @@ export function MapC() {
     map.current.addControl(topoScale);
 
     topoScale.goToScale(map.current, 25000)
-
-    map.current.addControl(new maplibregl.NavigationControl({
-      visualizePitch: true,
-      visualizeRoll: true,
-      showZoom: true,
-      showCompass: true
-  }));
-
-  map.current.addControl(new MaplibreExportControl({}), "top-left");
   });
 
   return (
