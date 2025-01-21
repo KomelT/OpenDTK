@@ -1,6 +1,6 @@
 #! /bin/bash
 
-OSM_PBF_FILE="https://osm.komelt.dev/europe/slovenia-latest.osm.pbf"
+OSM_PBF_FILE="https://mirror.komelt.dev/osm/europe/slovenia-latest.osm.pbf"
 
 # Chech if ./out/data.mbtiles exists
 if [ -f "./out/data.mbtiles" ]; then
