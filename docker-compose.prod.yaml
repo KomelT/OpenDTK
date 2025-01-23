@@ -1,0 +1,42 @@
+services:
+  make:
+    build:
+      context: tilemaker
+      dockerfile: dockerfile-make
+    volumes:
+      - ./tilemaker:/var/app/out/
+      - ./tilemaker/tmp:/var/app/tmp/
+
+  server:
+    build:
+      context: tilemaker
+      dockerfile: dockerfile-server
+    env_file:
+      - .env.prod
+    volumes:
+      - ./tilemaker:/var/app/out/
+    depends_on:
+      make:
+        condition: service_completed_successfully
+
+  app:
+    build:
+      context: app
+      dockerfile: dockerfile
+    env_file:
+      - .env.prod
+    volumes:
+      - ./app/dist:/var/app/dist/
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./app/dist:/var/www/html
+    ports:
+      - 80:80
+    depends_on:
+      app:
+        condition: service_completed_successfully
+      server:
+        condition: service_healthy
