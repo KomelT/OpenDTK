@@ -1,5 +1,4 @@
 import type { ControlPosition, IControl, Map as LMap, Unit } from "maplibre-gl";
-import { DOM } from "./dom.ts";
 
 export interface ScaleControlOptions {
 	maxWidth?: number;
@@ -13,9 +12,9 @@ const defaultOptions: ScaleControlOptions = {
 };
 
 export class TopoScale implements IControl {
-	_map: LMap;
-	_container: HTMLElement;
-	_dummyContainer: HTMLElement;
+	_map!: LMap;
+	_container!: HTMLElement;
+	_dummyContainer!: HTMLElement;
 	options: ScaleControlOptions;
 
 	/**
@@ -59,9 +58,10 @@ export class TopoScale implements IControl {
 		};
 		this._container.appendChild(el2);
 
-		this._dummyContainer = DOM.create("div", "", map.getContainer());
+		this._dummyContainer = window.document.createElement("div");
 		this._dummyContainer.style.visibility = "hidden";
 		this._dummyContainer.style.width = "1cm";
+		this._map.getContainer().appendChild(this._dummyContainer);
 
 		this._map.on("move", this._onMove);
 		this._onMove();
@@ -71,9 +71,10 @@ export class TopoScale implements IControl {
 
 	/** {@inheritDoc IControl.onRemove} */
 	onRemove() {
-		DOM.remove(this._container);
+		this._container.remove();
+		this._dummyContainer.remove();
 		this._map.off("move", this._onMove);
-		this._map = undefined;
+		this._map = undefined as unknown as LMap;
 	}
 
 	/**
@@ -99,7 +100,7 @@ export class TopoScale implements IControl {
 		return maxMeters;
 	}
 
-	updateScale(map: LMap, container: HTMLElement, options: ScaleControlOptions) {
+	updateScale(map: LMap, container: HTMLElement, _options: ScaleControlOptions) {
 		const scale = this.getScale(map);
 
 		const scaleText = container.querySelector("p");
