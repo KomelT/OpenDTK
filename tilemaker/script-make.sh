@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 OSM_PBF_FILE="https://mirror.komelt.dev/osm/europe/slovenia-latest.osm.pbf"
 

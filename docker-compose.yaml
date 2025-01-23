@@ -11,6 +11,8 @@ services:
     build:
       context: tilemaker
       dockerfile: dockerfile-server
+    env_file:
+      - .env.dev
     volumes:
       - ./tilemaker:/var/app/out/
     ports:
@@ -23,10 +25,10 @@ services:
     build:
       context: app
       dockerfile: dockerfile-dev
+    env_file:
+      - .env.dev
     volumes:
       - ./app:/var/app
-    environment:
-      VITE_TILEMAKER_SERVER_URL: http://192.168.1.19:8080
     ports:
       - 5173:5173
     depends_on:
