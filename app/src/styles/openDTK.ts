@@ -42,6 +42,15 @@ const terrains: LayerSpecification[] = [
 			"fill-color": "#000",
 		},
 	},
+	{
+		id: "voda",
+		type: "fill",
+		source: "openmaptiles",
+		"source-layer": "water",
+		paint: {
+			"fill-color": "#a9b5d6",
+		},
+	}
 ];
 openDTK.layers.push(...terrains);
 
