@@ -63,7 +63,7 @@ openDTK.layers.push(
 			],
 			layout: { "line-cap": "round", visibility: "visible" },
 			paint: {
-				"line-color": "#a9b5d6",
+				"line-color": "#322b73",
 				"line-width": 1,
 				"line-dasharray": [7, 2],
 			},
@@ -81,7 +81,7 @@ openDTK.layers.push(
 			],
 			layout: { "line-cap": "round", visibility: "visible" },
 			paint: {
-				"line-color": "#a9b5d6",
+				"line-color": "#322b73",
 				"line-width": 1,
 			},
 		},
@@ -93,6 +93,7 @@ openDTK.layers.push(
 			filter: ["==", "$type", "Polygon"],
 			paint: {
 				"fill-color": "#a9b5d6",
+				"fill-outline-color": "#322b73",
 			},
 		},
 	] as LayerSpecification[]),
