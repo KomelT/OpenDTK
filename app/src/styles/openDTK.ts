@@ -32,7 +32,7 @@ openDTK.layers.push(
 			"source-layer": "landcover",
 			filter: ["==", "class", "wood"],
 			paint: {
-				"fill-color": "#c8e2d0",
+				"fill-color": "#d2e6c3",
 			},
 		},
 		{
