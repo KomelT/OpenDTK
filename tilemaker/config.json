@@ -19,7 +19,7 @@
 		"landuse":           		{ "minzoom":  4, "maxzoom": 14, "simplify_below": 13, "simplify_level": 0.0003, "simplify_ratio": 2 },
 		"landcover":         		{ "minzoom":  0, "maxzoom": 14, "simplify_below": 13, "simplify_level": 0.0003, "simplify_ratio": 2 },
 		"mountain_peak":     		{ "minzoom": 11, "maxzoom": 14 },
-		"contour":					 		{ "minzoom":  2, "maxzoom":  9, "source": "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp" }
+		"contour":					 		{ "minzoom":  0, "maxzoom":  20, "source": "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp" }
 	},
 	"settings": {
 		"minzoom": 0,

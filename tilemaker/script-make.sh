@@ -25,7 +25,7 @@ fi
 
 # Check if contour SHP files exists
 if [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp" ] && [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_line.shp" ]; then
-  echo "File ./tmp/data.osm.pbf already exists. Skipping download..."
+  echo "File ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp and ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_line.shp already exists. Skipping download..."
 else
   if [ -f "./tmp/DTM_SLO_RELIEF.zip" ]; then
     echo "File ./tmp/DTM_SLO_RELIEF.zip already exists. Skipping download..."
@@ -38,10 +38,11 @@ else
   fi
 
   unzip ./tmp/DTM_SLO_RELIEF.zip -d ./DTM_SLO_RELIEF
-  unzip ./DTM_SLO_RELIEF/DTM_SLO_RELIEF_EL_PLASTNICE_* -d ./tmp_contour
+  unzip ./DTM_SLO_RELIEF/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_* -d ./tmp_contour
+  unzip ./DTM_SLO_RELIEF/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_* -d ./tmp_contour
 
-  mv ./tmp_contour/*.shp ./tmp/
-  mv ./tmp_contour/*.shx ./tmp/
+  mv ./tmp_contour/*.shp ./tmp
+  mv ./tmp_contour/*.shx ./tmp
 
   rm -rf ./DTM_SLO_RELIEF*
   rm -rf ./tmp_contour
