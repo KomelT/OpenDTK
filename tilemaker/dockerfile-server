@@ -2,11 +2,11 @@ FROM ghcr.io/systemed/tilemaker:master
 
 WORKDIR /var/app
 
+RUN apt-get update && apt-get install -y curl
+
 COPY script-server.sh .
 
 ADD static /var/app/static
-
-RUN apt-get update && apt-get install -y curl
 
 EXPOSE 8080
 
