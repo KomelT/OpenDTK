@@ -43,6 +43,7 @@ else
 
   mv ./tmp_contour/*.shp ./tmp
   mv ./tmp_contour/*.shx ./tmp
+  mv ./tmp_contour/*.dbf ./tmp
 
   rm -rf ./DTM_SLO_RELIEF*
   rm -rf ./tmp_contour
