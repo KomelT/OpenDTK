@@ -1,5 +1,6 @@
 services:
   make:
+    container_name: opendtk-tilemaker
     build:
       context: tilemaker
       dockerfile: dockerfile-make
@@ -8,9 +9,11 @@ services:
       - ./tilemaker/tmp:/var/app/tmp/
 
   server:
+    container_name: opendtk-server
     build:
       context: tilemaker
       dockerfile: dockerfile-server
+    restart: unless-stopped
     env_file:
       - .env.prod
     volumes:
@@ -20,6 +23,7 @@ services:
         condition: service_completed_successfully
 
   app:
+    container_name: opendtk-app
     build:
       context: app
       dockerfile: dockerfile
@@ -29,7 +33,9 @@ services:
       - ./app/dist:/var/app/dist/
 
   nginx:
+    container_name: opendtk-nginx
     image: nginx:alpine
+    restart: unless-stopped
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./app/dist:/var/www/html
