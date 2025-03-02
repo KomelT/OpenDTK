@@ -730,6 +730,21 @@ end
 
 -- Remap coastlines
 function attribute_function(attr,layer)
+	if layer == "contour" then
+		local z = attr["Z_PLAS"]
+		local z1 = 0
+		if math.fmod(z, 50) == 0 then
+			z1 = 50
+		elseif math.fmod(z, 10) == 0 then
+			z1 = 10
+		elseif math.fmod(z, 5) == 0 then
+			z1 = 5
+		elseif math.fmod(z, 2) == 0 then
+			z1 = 2
+		end
+		return { class="contour", equidistance=z1, z=z }
+	end
+	
 	if attr["featurecla"]=="Glaciated areas" then
 		return { subclass="glacier" }
 	elseif attr["featurecla"]=="Antarctic Ice Shelf" then

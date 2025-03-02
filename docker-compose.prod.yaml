@@ -1,14 +1,16 @@
 services:
-  make:
+  tilemaker:
     container_name: opendtk-tilemaker
     build:
       context: tilemaker
       dockerfile: dockerfile-make
+    env_file:
+      - .env.prod
     volumes:
       - ./tilemaker:/var/app/out/
       - ./tilemaker/tmp:/var/app/tmp/
 
-  server:
+  tileserver:
     container_name: opendtk-server
     build:
       context: tilemaker
@@ -19,7 +21,7 @@ services:
     volumes:
       - ./tilemaker:/var/app/out/
     depends_on:
-      make:
+      tilemaker:
         condition: service_completed_successfully
 
   app:
@@ -44,5 +46,5 @@ services:
     depends_on:
       app:
         condition: service_completed_successfully
-      server:
+      tileserver:
         condition: service_healthy

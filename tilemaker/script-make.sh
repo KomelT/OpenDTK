@@ -1,7 +1,11 @@
 #!/bin/bash
 
-OSM_PBF_FILE="https://mirror.komelt.dev/osm/europe/slovenia-latest.osm.pbf"
-CONTOUR_SHP_FILE="https://mirror.komelt.dev/gurs/DTM_SLO_RELIEF.zip"
+if [ -z "$MIRROR_URL" ]; then
+  MIRROR_URL="https://mirror.komelt.dev"
+fi
+
+OSM_PBF_FILE="${MIRROR_URL}/osm/europe/slovenia-latest.osm.pbf"
+CONTOUR_SHP_FILE="${MIRROR_URL}/gurs/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip"
 
 # Chech if ./out/data.mbtiles exists
 if [ -f "./out/data.mbtiles" ]; then
@@ -24,29 +28,20 @@ if [ $? -ne 0 ]; then
 fi
 
 # Check if contour SHP files exists
-if [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp" ] && [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_line.shp" ]; then
-  echo "File ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_line.shp and ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_line.shp already exists. Skipping download..."
+if [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.shp" ]; then
+  echo "File ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.shp already exists. Skipping download..."
 else
-  if [ -f "./tmp/DTM_SLO_RELIEF.zip" ]; then
-    echo "File ./tmp/DTM_SLO_RELIEF.zip already exists. Skipping download..."
+  if [ -f "./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip" ]; then
+    echo "File ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip already exists. Skipping download..."
   else
-    wget $CONTOUR_SHP_FILE -O ./tmp/DTM_SLO_RELIEF.zip
+    wget $CONTOUR_SHP_FILE -O ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip
     if [ $? -ne 0 ]; then
-      echo "Failed to download contour SHP files"
+      echo "Failed to download contour DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip file"
       exit 1
     fi
   fi
 
-  unzip ./tmp/DTM_SLO_RELIEF.zip -d ./DTM_SLO_RELIEF
-  unzip ./DTM_SLO_RELIEF/DTM_SLO_RELIEF_EL_PLASTNICE_ZAHOD_L_* -d ./tmp_contour
-  unzip ./DTM_SLO_RELIEF/DTM_SLO_RELIEF_EL_PLASTNICE_VZHOD_L_* -d ./tmp_contour
-
-  mv ./tmp_contour/*.shp ./tmp
-  mv ./tmp_contour/*.shx ./tmp
-  mv ./tmp_contour/*.dbf ./tmp
-
-  rm -rf ./DTM_SLO_RELIEF*
-  rm -rf ./tmp_contour
+  unzip ./tmp/DTM_SLO_RELIEF_EL_PLASTNICE_EPSG4326_line.zip -d ./tmp
 fi
 
 echo -e "Done\n"
@@ -55,5 +50,4 @@ echo -e "Done\n"
 /usr/src/app/tilemaker ./tmp/data.osm.pbf \
   --output ./out/data.mbtiles \
   --config ./out/config.json \
-  --process ./out/process.lua \
-  --store /tmp
+  --process ./out/process.lua

@@ -24,16 +24,25 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "http://localhost:8080/spec.json"
+      "url": "http://localhost/tileserver/spec.json"
     }
   },
   "sprite": "https://openmaptiles.github.io/osm-bright-gl-style/sprite",
-  "glyphs": "http://localhost:8080/fonts/{fontstack}/{range}.pbf",
+  "glyphs": "http://localhost/tileserver/fonts/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "background",
       "type": "background",
       "paint": {"background-color": "#f8f4f0"}
+    },
+    {
+      "id": "contour",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "contour",
+      "paint": {
+        "line-color": "#a0c8f0"
+      }
     },
     {
       "id": "landcover-glacier",

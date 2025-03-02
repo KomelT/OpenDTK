@@ -1,13 +1,15 @@
 services:
-  make:
+  tilemaker:
     build:
       context: tilemaker
       dockerfile: dockerfile-make
+    env_file:
+      - .env.dev
     volumes:
       - ./tilemaker:/var/app/out/
       - ./tilemaker/tmp:/var/app/tmp/
 
-  server:
+  tileserver:
     build:
       context: tilemaker
       dockerfile: dockerfile-server
@@ -18,7 +20,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      make:
+      tilemaker:
         condition: service_completed_successfully
 
   app:
@@ -32,5 +34,17 @@ services:
     ports:
       - 5173:5173
     depends_on:
-      server:
+      tileserver:
         condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      tileserver:
+        condition: service_healthy
+      tilemaker:
+        condition: service_completed_successfully

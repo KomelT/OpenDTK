@@ -1,4 +1,7 @@
-import type { LayerSpecification, StyleSpecification } from "maplibre-gl";
+import type {
+	LayerSpecification,
+	StyleSpecification,
+} from "react-map-gl/maplibre";
 
 // Documentation: https://maplibre.org/maplibre-style-spec/
 
@@ -32,7 +35,8 @@ openDTK.layers.push(
 			"source-layer": "landcover",
 			filter: ["==", "class", "wood"],
 			paint: {
-				"fill-color": "#d2e6c3",
+				"fill-color": "#f1f7ec",
+				"fill-outline-color": "#d7e9ca",
 			},
 		},
 		{
@@ -42,6 +46,22 @@ openDTK.layers.push(
 			"source-layer": "building",
 			paint: {
 				"fill-color": "#000",
+			},
+		},
+	] as LayerSpecification[]),
+);
+
+// Contours
+openDTK.layers.push(
+	...([
+		{
+			id: "contour",
+			type: "line",
+			source: "opendtk",
+			"source-layer": "contour",
+			filter: ["all", ["==", "equidistance", 10]],
+			paint: {
+				"line-color": "#d1b97a",
 			},
 		},
 	] as LayerSpecification[]),
