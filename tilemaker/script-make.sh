@@ -50,4 +50,5 @@ echo -e "Done\n"
 /usr/src/app/tilemaker ./tmp/data.osm.pbf \
   --output ./out/data.mbtiles \
   --config ./out/config.json \
-  --process ./out/process.lua
+  --process ./out/process.lua \
+  --store /tmp
