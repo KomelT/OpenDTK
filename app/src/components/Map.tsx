@@ -68,7 +68,7 @@ export function MapC() {
         {...viewState}
         onMove={onMove}
         style={{ width: "50vw", height: "100vh" }}
-        mapStyle="http://localhost/tileserver/style.json"
+        mapStyle={`${import.meta.env.VITE_TILEMAKER_SERVER_URL}/style.json`}
       >
         <NavigationControl />
         <GeolocateControl />
