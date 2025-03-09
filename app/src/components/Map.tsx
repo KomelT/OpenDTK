@@ -11,6 +11,7 @@ import '@maplibre/maplibre-gl-inspect/dist/maplibre-gl-inspect.css';
 import { ButtonControl } from "../ButtonControl";
 
 import { openDTK } from "../styles/openDTK";
+import { getBooleanSearchParam, getCordsFromSearchParam } from '../tools';
 
 /*
 import { TopoScale } from "../TopoScale/topoScale";
@@ -20,21 +21,30 @@ import "../TopoScale/style.css";
 // Maplibre example: https://github.com/visgl/react-map-gl/blob/master/examples/maplibre/side-by-side/src/app.tsx
 
 export function MapC() {
-  const [viewState, setViewState] = useState({
-    longitude: 13.733635,
-    latitude: 45.842433,
-    zoom: 14,
-  });
+  const [viewState, setViewState] = useState(getCordsFromSearchParam(13.733635, 45.842433, 14));
 
-  const [tandem, setTandem] = useState(false);
+  const [tandem, setTandem] = useState(getBooleanSearchParam('tandem'));
 
   function buttonControlClick() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tandem', (!tandem).toString());
+    window.history.replaceState(null, '', url.toString());
+
     setTandem((prevTandem) => {
       return !prevTandem;
     });
   }
 
-  const onMove = useCallback((evt: ViewStateChangeEvent) => setViewState(evt.viewState), []);
+  const onMove = useCallback((evt: ViewStateChangeEvent) => {
+    setViewState(evt.viewState)
+
+    const { longitude, latitude, zoom } = evt.viewState;
+    const url = new URL(window.location.href);
+    url.searchParams.set('lon', longitude.toFixed(6));
+    url.searchParams.set('lat', latitude.toFixed(6));
+    url.searchParams.set('zoom', zoom.toFixed(2));
+    window.history.replaceState(null, '', url.toString());
+  }, []);
 
   const firstMap = useRef<MapRef | null>(null);
   const secondMap = useRef<MapRef | null>(null);

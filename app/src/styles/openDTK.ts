@@ -14,8 +14,7 @@ export const openDTK: StyleSpecification = {
 			url: `${import.meta.env.VITE_TILEMAKER_SERVER_URL}/spec.json`,
 		},
 	},
-	glyphs:
-		`${import.meta.env.VITE_TILEMAKER_SERVER_URL}/fonts/{fontstack}/{range}.pbf`,
+	glyphs: `${import.meta.env.VITE_TILEMAKER_SERVER_URL}/fonts/{fontstack}/{range}.pbf`,
 	layers: [
 		{
 			id: "ozadje",
@@ -215,6 +214,22 @@ openDTK.layers.push(
 				"all",
 				["==", "$type", "LineString"],
 				["in", "tracktype", "grade1", "grade2"],
+			],
+			layout: { "line-cap": "square", "line-join": "bevel" },
+			paint: {
+				"line-color": "#000",
+			},
+		},
+		{
+			id: "kolovoz2",
+			type: "line",
+			source: "opendtk",
+			"source-layer": "transportation",
+			filter: [
+				"all",
+				["==", "$type", "LineString"],
+				["==", "class", "track"],
+				["!has", "tracktype"],
 			],
 			layout: { "line-cap": "square", "line-join": "bevel" },
 			paint: {
