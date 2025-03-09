@@ -13,10 +13,8 @@ import { ButtonControl } from "../ButtonControl";
 import { openDTK } from "../styles/openDTK";
 import { getBooleanSearchParam, getCordsFromSearchParam } from '../tools';
 
-/*
 import { TopoScale } from "../TopoScale/topoScale";
 import "../TopoScale/style.css";
-*/
 
 // Maplibre example: https://github.com/visgl/react-map-gl/blob/master/examples/maplibre/side-by-side/src/app.tsx
 
@@ -48,6 +46,13 @@ export function MapC() {
 
   const firstMap = useRef<MapRef | null>(null);
   const secondMap = useRef<MapRef | null>(null);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (firstMap.current) {
+      firstMap.current.addControl(new TopoScale());
+    }
+  }, [firstMap.current]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
