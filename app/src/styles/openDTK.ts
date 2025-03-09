@@ -14,6 +14,8 @@ export const openDTK: StyleSpecification = {
 			url: `${import.meta.env.VITE_TILEMAKER_SERVER_URL}/spec.json`,
 		},
 	},
+	glyphs:
+		`${import.meta.env.VITE_TILEMAKER_SERVER_URL}/fonts/{fontstack}/{range}.pbf`,
 	layers: [
 		{
 			id: "ozadje",
@@ -35,17 +37,8 @@ openDTK.layers.push(
 			"source-layer": "landcover",
 			filter: ["==", "class", "wood"],
 			paint: {
-				"fill-color": "#f1f7ec",
+				"fill-color": "#d7e7c1",
 				"fill-outline-color": "#d7e9ca",
-			},
-		},
-		{
-			id: "zgradba",
-			type: "fill",
-			source: "opendtk",
-			"source-layer": "building",
-			paint: {
-				"fill-color": "#000",
 			},
 		},
 	] as LayerSpecification[]),
@@ -55,13 +48,60 @@ openDTK.layers.push(
 openDTK.layers.push(
 	...([
 		{
-			id: "contour",
+			id: "plastnica",
 			type: "line",
 			source: "opendtk",
 			"source-layer": "contour",
 			filter: ["all", ["==", "equidistance", 10]],
 			paint: {
-				"line-color": "#d1b97a",
+				"line-color": "#bda754",
+				"line-width": 1,
+				"line-dasharray": [25, 3],
+			},
+		},
+		{
+			id: "glavna-plastnica",
+			type: "line",
+			source: "opendtk",
+			"source-layer": "contour",
+			filter: ["all", ["==", "equidistance", 50]],
+			paint: {
+				"line-color": "#bda754",
+				"line-width": 1.5,
+			},
+		},
+		{
+			id: "glavna-plastnica-text",
+			type: "symbol",
+			source: "opendtk",
+			"source-layer": "contour",
+			filter: ["all", ["==", "equidistance", 50]],
+			layout: {
+				"text-field": "{z}",
+				"symbol-placement": "line",
+				"text-size": 12,
+				"text-font": ["KlokanTech Noto Sans Regular"],
+				"text-allow-overlap": false,
+			},
+			paint: {
+				"text-color": "#d1b97a",
+				"text-halo-color": "#ffffff",
+				"text-halo-width": 1,
+			},
+		},
+	] as LayerSpecification[]),
+);
+
+// Buildings
+openDTK.layers.push(
+	...([
+		{
+			id: "zgradba",
+			type: "fill",
+			source: "opendtk",
+			"source-layer": "building",
+			paint: {
+				"fill-color": "#000",
 			},
 		},
 	] as LayerSpecification[]),
